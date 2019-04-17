@@ -1,3 +1,40 @@
+# Preprocessing Data
+
+    #num_words = 10000 keeps the 10,000 most frequent occured words from the training data 
+    (train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=10000)
+    return (train_data, train_labels), (test_data, test_labels)
+    
+    #Helper function to convert integers back to words
+    #A dictonary mapping words to an integer index
+    
+    word_index = imdb.get_word_index()
+
+    #The first indices are reserved
+    word_index = {k:(v+3) for k, v in word_index.items()}
+    word_index["<PAD>"] = 0
+    word_index["<START>"] = 1
+    word_index["<UNK>"] = 2 #unknown
+    word_index["<UNUSED>"] = 3
+
+    text_data = dict([(value, key) for (key, value) in word_index.items()])
+
+    return ' '.join([text_data.get(i, '?') for i in text])
+    
+    # Data Padding to same length sequences
+    data_padding(train_data,test_data):
+    #Data Preperation, padding the array so all of the data has the same length
+    train_data = keras.preprocessing.sequence.pad_sequences(train_data,
+                                                            value=word_index["<PAD>"],
+                                                            padding = 'post',
+                                                            maxlen = 300)
+    test_data = keras.preprocessing.sequence.pad_sequences(test_data,
+                                                           value=word_index["<PAD>"],
+                                                           padding = 'post',
+                                                           maxlen = 300)
+    
+    
+
+
 # Model Design
 ### CNN Model: 
 
