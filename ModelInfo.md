@@ -1,5 +1,8 @@
 # Preprocessing Data
 
+    #importing imdb data from keras datasert 
+    imdb = keras.datasets.imdb
+    
     #num_words = 10000 keeps the 10,000 most frequent occured words from the training data 
     (train_data, train_labels), (test_data, test_labels) = imdb.load_data(num_words=10000)
     return (train_data, train_labels), (test_data, test_labels)
