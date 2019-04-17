@@ -60,6 +60,24 @@
     model.add(keras.layers.Dense(64, activation=tf.nn.relu))
     model.add(keras.layers.Dense(1,activation=tf.nn.sigmoid))
     model.summary()
+    
+    Adam = keras.optimizers.Adam(lr=0.0001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
+    model.compile(optimizer = Adam,loss='binary_crossentropy', metrics=['acc', auc])
+
+    #splitting the data for validation purposes 
+    x_val = train_data[:10000]
+    partial_x_train = train_data[10000:]
+
+    y_val = train_labels[:10000]
+    pratial_y_train = train_labels[10000:]
+
+    #Training the model
+    early_stopping = keras.callbacks.EarlyStopping(monitor='val_loss', min_delta=0, patience=2,
+                                                   verbose=0, mode='auto', baseline=None, 
+                                                   restore_best_weights=False)
+    history = model.fit(np.array(partial_x_train),np.array(pratial_y_train),epochs=40, batch_size=512, 
+                        validation_data=(np.array(x_val),np.array(y_val)),
+                        verbose=1, callbacks=[early_stopping])
 
 ### RNN Model: 
 
